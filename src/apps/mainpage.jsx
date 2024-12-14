@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 const MainPage = () => {
   return (
@@ -29,12 +30,16 @@ const MainPage = () => {
 
       {/* My Page와 ChatBot 버튼 */}
       <section className="w-full max-w-md flex justify-around">
-        <button className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
-          My Page
-        </button>
-        <button className="px-6 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600">
-          ChatBot
-        </button>
+        <Link to="/mypage">
+          <button className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
+            My Page
+          </button>
+        </Link>
+        <Link to="/chatbot">
+          <button className="px-6 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600">
+            ChatBot
+          </button>
+        </Link>
       </section>
 
       {/* 추가 정보 섹션 */}
