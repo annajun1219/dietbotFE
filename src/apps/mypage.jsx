@@ -6,11 +6,6 @@ const MyPage = () => {
       {/* 상단 로고와 내비게이션 */}
       <header className="flex justify-between items-center p-4 bg-white shadow-md rounded-lg">
         <div className="flex items-center space-x-4">
-          <img
-            src="/path/to/logo.png"
-            alt="박용우봇 로고"
-            className="w-12 h-12"
-          />
           <div>
             <h1 className="text-xl font-bold text-green-600">박용우봇</h1>
             <p className="text-sm text-gray-500">목표를 위한 여정</p>
