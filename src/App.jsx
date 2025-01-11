@@ -9,6 +9,7 @@ import EditPage from "./apps/editpage";
 import Home from "./apps/Home";
 import Login from "./apps/Login";
 import Signup from "./apps/Signup";
+import axios from 'axios';
 
 // Context 생성
 export const DataContext = createContext();
@@ -43,3 +44,4 @@ const App = () => {
 };
 
 export default App;
+
