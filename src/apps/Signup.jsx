@@ -1,10 +1,36 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // React Router를 위한 import
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Header from '../components/Header';
 
 const Signup = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const [username, setUsername] = useState(''); // 아이디 상태 추가
+  const [password, setPassword] = useState(''); // 비밀번호 상태 추가
+  const [confirmPassword, setConfirmPassword] = useState(''); // 비밀번호 확인 상태 추가
+  const [errorMessage, setErrorMessage] = useState(''); // 오류 메시지 상태 추가
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // 기본 폼 동작 방지
+
+    // 입력 필드가 비어 있는지 확인
+    if (!username || !password || !confirmPassword) {
+      setErrorMessage('모두 입력해 주세요.');
+      return;
+    }
+
+    // 비밀번호와 비밀번호 확인 일치 여부 확인
+    if (password !== confirmPassword) {
+      setErrorMessage('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+      return;
+    }
+
+    // 입력값이 유효하면 mainpage로 이동
+    setErrorMessage(''); // 오류 메시지 초기화
+    navigate('/mainpage');
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -12,7 +38,10 @@ const Signup = () => {
       <div className="flex flex-1 justify-center items-center">
         <div className="bg-white shadow-md rounded-lg p-8 max-w-sm w-full">
           <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">회원가입</h2>
-          <form>
+          {errorMessage && (
+            <p className="text-center text-red-500 mb-4">{errorMessage}</p>
+          )}
+          <form onSubmit={handleSubmit}> {/* handleSubmit 함수 연결 */}
             <div className="mb-4">
               <label
                 htmlFor="username"
@@ -25,6 +54,8 @@ const Signup = () => {
                 id="username"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
                 placeholder="아이디 입력"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)} // 아이디 상태 업데이트
               />
             </div>
             <div className="mb-4">
@@ -39,6 +70,8 @@ const Signup = () => {
                 id="password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
                 placeholder="비밀번호 입력"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} // 비밀번호 상태 업데이트
               />
             </div>
             <div className="mb-4">
@@ -53,6 +86,8 @@ const Signup = () => {
                 id="confirm-password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
                 placeholder="비밀번호 확인"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)} // 비밀번호 확인 상태 업데이트
               />
             </div>
             <div className="mb-4">
@@ -72,7 +107,17 @@ const Signup = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-green-400 text-white font-medium py-2 rounded-lg hover:bg-green-500 transition"
+              className="w-full text-black font-medium py-2 rounded-lg transition"
+              style={{
+                backgroundColor: 'rgb(221,235,200)',
+                transition: 'background-color 0.3s',
+              }}
+              onMouseOver={(e) =>
+                (e.target.style.backgroundColor = 'rgb(200,220,180)')
+              }
+              onMouseOut={(e) =>
+                (e.target.style.backgroundColor = 'rgb(221,235,200)')
+              }
             >
               회원가입하기 →
             </button>

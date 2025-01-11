@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import dietlogo from '../components/diet_logo.png';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -11,25 +12,53 @@ const Home = () => {
       <div className="flex flex-1 flex-col justify-center items-center">
         {/* 로고 */}
         <img
-          src="./diet_logo.png"
+          src={dietlogo}
           alt="Diet Logo"
-          className="w-40 h-40 mb-6"
+          className="mb-6"
+          style={{ width: '80%', maxWidth: '400px', height: 'auto' }}
         />
         {/* 로고 아래 텍스트 */}
-        <h1 className="text-2xl font-bold text-green-600 mb-2">박용우봇</h1>
-        <p className="text-gray-600 mb-8">다이어트를 더욱 쉽게</p>
+        {/* "다이어트를 더욱 쉽게" 글자 제거 */}
 
         {/* 버튼들 */}
-        <div className="space-y-4">
+        <div className="space-y-8"> {/* 간격 조정 */}
           <button
             onClick={() => navigate('/login')}
-            className="w-40 bg-green-400 text-white font-medium py-2 rounded-lg hover:bg-green-500 transition"
+            className="w-40"
+            style={{
+              backgroundColor: 'rgb(221,235,200)',
+              color: 'black',
+              fontWeight: 'medium',
+              padding: '0.5rem',
+              borderRadius: '0.5rem',
+              transition: 'background-color 0.3s',
+            }}
+            onMouseOver={(e) =>
+              (e.target.style.backgroundColor = 'rgb(200,220,180)')
+            }
+            onMouseOut={(e) =>
+              (e.target.style.backgroundColor = 'rgb(221,235,200)')
+            }
           >
             로그인
           </button>
           <button
             onClick={() => navigate('/signup')}
-            className="w-40 bg-green-100 text-green-600 font-medium py-2 rounded-lg hover:bg-green-200 transition"
+            className="w-40"
+            style={{
+              backgroundColor: 'rgb(221,235,200)',
+              color: 'black',
+              fontWeight: 'medium',
+              padding: '0.5rem',
+              borderRadius: '0.5rem',
+              transition: 'background-color 0.3s',
+            }}
+            onMouseOver={(e) =>
+              (e.target.style.backgroundColor = 'rgb(200,220,180)')
+            }
+            onMouseOut={(e) =>
+              (e.target.style.backgroundColor = 'rgb(221,235,200)')
+            }
           >
             회원가입
           </button>

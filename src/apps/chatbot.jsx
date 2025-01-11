@@ -31,14 +31,14 @@ const ChatBotPage = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", backgroundColor: "rgb(249,251,242)" }}>
       {/* 메시지 표시 영역 */}
       <div
         style={{
           flex: 1,
           overflowY: "auto",
           padding: "20px",
-          backgroundColor: "#f8f8f8",
+          backgroundColor: "rgb(255, 255, 255)",
         }}
       >
         {messages.map((message) => (
@@ -55,7 +55,7 @@ const ChatBotPage = () => {
                 padding: "10px 15px",
                 borderRadius: "20px",
                 backgroundColor:
-                  message.sender === "bot" ? "#d9f7be" : "#e6f7ff",
+                  message.sender === "bot" ? "rgb(221,235,200)" : "rgb(249,251,242)",
                 color: "#333",
               }}
             >
@@ -72,6 +72,7 @@ const ChatBotPage = () => {
           alignItems: "center",
           padding: "10px",
           borderTop: "1px solid #ddd",
+          backgroundColor: "rgb(221,235,200)",
         }}
       >
         <input
@@ -85,14 +86,15 @@ const ChatBotPage = () => {
             border: "1px solid #ddd",
             borderRadius: "20px",
             marginRight: "10px",
+            backgroundColor: "rgb(249,251,242)",
           }}
         />
         <button
           onClick={handleSendMessage}
           style={{
             padding: "10px 20px",
-            backgroundColor: "#6aa84f",
-            color: "white",
+            backgroundColor: "rgb(221,235,200)",
+            color: "black",
             border: "none",
             borderRadius: "20px",
             cursor: "pointer",
