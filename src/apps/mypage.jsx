@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom"; // Link 사용
 
 const MyPage = () => {
   return (
@@ -24,18 +25,22 @@ const MyPage = () => {
 
       {/* 사용자 목표 정보 */}
       <section className="mt-6 bg-green-100 p-4 rounded-lg shadow-md">
-        <p className="text-sm text-gray-600">목표 체중: <strong>55kg</strong></p>
+        <p className="text-sm text-gray-600">
+          목표 체중: <strong>55kg</strong>
+        </p>
         <p className="text-sm text-gray-600">현재 2단계 4일차 진행 중</p>
-        <button className="mt-2 px-4 py-2 bg-green-500 text-white text-sm rounded-lg shadow-md hover:bg-green-600">
-          오늘의 정보 입력
-        </button>
+        <Link to="/input">
+          <button className="mt-2 px-4 py-2 bg-green-500 text-white text-sm rounded-lg shadow-md hover:bg-green-600">
+            오늘의 정보 입력
+          </button>
+        </Link>
       </section>
 
       {/* 기록 정보 */}
       <section className="mt-6 space-y-4">
-        {[{ date: '11월 11일', weight: '69.7kg', muscle: '24.6kg', fat: '25.3kg' },
-          { date: '11월 15일', weight: '69.2kg', muscle: '24.5kg', fat: '25.2kg' },
-          { date: '11월 18일', weight: '68.8kg', muscle: '24.5kg', fat: '24.2kg' }].map((entry, index) => (
+        {[{ date: "11월 11일", weight: "69.7kg", muscle: "24.6kg", fat: "25.3kg" },
+          { date: "11월 15일", weight: "69.2kg", muscle: "24.5kg", fat: "25.2kg" },
+          { date: "11월 18일", weight: "68.8kg", muscle: "24.5kg", fat: "24.2kg" }].map((entry, index) => (
           <div
             key={index}
             className="flex justify-between items-center bg-green-100 p-4 rounded-lg shadow-md"
@@ -62,7 +67,6 @@ const MyPage = () => {
       <section className="mt-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-lg font-bold text-center text-gray-700">체중 (kg)</h2>
         <div className="mt-4">
-          {/* 차트 이미지 placeholder */}
           <img
             src="/path/to/weight-chart-placeholder.png"
             alt="체중 변화 차트"
