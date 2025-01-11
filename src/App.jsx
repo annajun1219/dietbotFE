@@ -27,6 +27,7 @@ const App = () => {
         <Header />
         <div className="pt-20"></div>
         <Routes>
+          <Route path="/" element={<Home />} />  {/* 기본 경로 */}
           <Route path="/Home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
