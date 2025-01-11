@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const MainPage = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center p-6 space-y-8" style={{ backgroundColor: 'rgb(255, 255, 255)' }}>
+    <div className="min-h-screen flex flex-col items-center p-6 space-y-8" style={{ backgroundColor: 'rgb(249, 251, 242)' }}>
       {/* 현재 체중 및 진행 상태 */}
       <section className="w-full max-w-md shadow-lg rounded-lg p-6 text-center" style={{ backgroundColor: 'rgb(249,251,242)' }}>
         <p className="text-lg text-gray-700">

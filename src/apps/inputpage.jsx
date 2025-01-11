@@ -22,7 +22,7 @@ const InputPage = () => {
   useEffect(() => {
     const fetchGoalWeight = async () => {
       try {
-        const response = await axios.get(`/api/user/set/goal`);
+        const response = await axios.get(`http://localhost:8080/api/user/modify/me`);
         setGoalWeight(response.data.goalWeight || ''); // 목표 체중이 없으면 빈 값
       } catch (error) {
         console.error('Error fetching goal weight:', error);
@@ -50,7 +50,7 @@ const InputPage = () => {
         user: { userId: userId },
       };
 
-      await axios.post('/api/user/set/record', payload);
+      await axios.post('http://localhost:8080/api/user/modify/me', payload);
       setWeightData((prevData) => [...prevData, { ...payload, date: formData.date.toLocaleDateString() }]);
       alert('체중 정보가 성공적으로 입력되었습니다.');
       navigate('/mypage');
