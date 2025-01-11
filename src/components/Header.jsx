@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import dietlogo from '../components/diet_logo.png';
 
 const Header = () => {
   return (
@@ -8,7 +9,7 @@ const Header = () => {
         {/* 로고 */}
         <div className="flex items-center space-x-4">
           <img
-            src="/path/to/logo.png"
+            src={dietlogo}
             alt="Logo"
             className="w-12 h-12"
           />
