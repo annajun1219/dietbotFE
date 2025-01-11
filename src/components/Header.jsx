@@ -5,7 +5,7 @@ import dietLogo from '../components/diet_logo.png';
 const Header = () => {
   return (
     <header className="bg-white shadow-md fixed top-0 w-full z-10">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         {/* 로고 */}
         <div className="flex items-center ">
           <img
@@ -39,6 +39,7 @@ const Header = () => {
       </div>
     </header>
   );
+  
 };
 
 export default Header;
