@@ -9,19 +9,17 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
-      <div className="flex flex-1 flex-col justify-center items-center">
+      <div className="flex flex-1 flex-col justify-center items-center" style={{ marginTop: '-100px' }}> {/* 로고 위치 위로 더 이동 */}
         {/* 로고 */}
         <img
           src={dietlogo}
           alt="Diet Logo"
-          className="mb-6"
-          style={{ width: '80%', maxWidth: '400px', height: 'auto' }}
+          className="mb-10"
+          style={{ width: '100%', maxWidth: '600px', height: 'auto' }}
         />
-        {/* 로고 아래 텍스트 */}
-        {/* "다이어트를 더욱 쉽게" 글자 제거 */}
 
         {/* 버튼들 */}
-        <div className="space-y-8"> {/* 간격 조정 */}
+        <div className="flex w-full max-w-lg mt-6 items-center justify-between" style={{ gap: '5%' }}> {/* 버튼 간격 조정 */}
           <button
             onClick={() => navigate('/login')}
             className="w-40"

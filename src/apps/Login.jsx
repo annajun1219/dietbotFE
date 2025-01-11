@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // React Router를 위한 import
+import axios from 'axios';
 import Header from '../components/Header';
 
 const Login = () => {
   const navigate = useNavigate(); // useNavigate 훅 사용
   const [errorMessage, setErrorMessage] = useState("");
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ userId: "", password: "" });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -13,15 +14,28 @@ const Login = () => {
     setErrorMessage(""); // 오류 메시지 초기화
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // 기본 폼 동작 방지
 
-    if (!formData.username || !formData.password) {
+    if (!formData.userId || !formData.password) {
       setErrorMessage("모두 입력해 주세요.");
       return;
     }
 
-    navigate('/mainpage'); // mainpage.jsx로 이동
+    try {
+      const response = await axios.post('/api/login', {
+        id: formData.userId,
+        password: formData.password,
+      });
+
+      if (response.data.login === "success") {
+        navigate('/mainpage'); // 로그인 성공 시 mainpage.jsx로 이동
+      } else {
+        setErrorMessage(response.data.error || "로그인에 실패했습니다.");
+      }
+    } catch (error) {
+      setErrorMessage("서버와의 연결에 실패했습니다. 잠시 후 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -36,15 +50,15 @@ const Login = () => {
           <form onSubmit={handleSubmit}> {/* handleSubmit 함수 연결 */}
             <div className="mb-4">
               <label
-                htmlFor="username"
+                htmlFor="userId"
                 className="block text-gray-600 font-medium mb-1"
               >
                 아이디
               </label>
               <input
                 type="text"
-                id="username"
-                value={formData.username}
+                id="userId"
+                value={formData.userId}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
                 placeholder="아이디 입력"
