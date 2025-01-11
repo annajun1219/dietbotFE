@@ -3,12 +3,10 @@ import React, { useState } from "react";
 const ChatBotPage = () => {
   const [messages, setMessages] = useState([
     { id: 1, text: "어서오세요. 무엇을 도와드릴까요?", sender: "bot" },
-    { id: 2, text: "아몬드가 몇 칼로리인지 알고싶어.", sender: "user" },
-    { id: 3, text: "아몬드는 100g당 576칼로리입니다.", sender: "bot" },
   ]);
   const [input, setInput] = useState("");
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (input.trim() === "") return;
 
     const newMessage = {
@@ -19,13 +17,40 @@ const ChatBotPage = () => {
 
     setMessages([...messages, newMessage]);
 
-    // 간단히 응답 추가 (예제용)
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 1, text: "챗봇 응답 준비 중입니다.", sender: "bot" },
-      ]);
-    }, 1000);
+    try {
+      // API 호출
+      const response = await fetch("/api/user/chatbot/query", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: input }),
+      });
+
+      if (!response.ok) {
+        throw new Error("API 호출 실패");
+      }
+
+      const data = await response.json();
+
+      const botResponse = {
+        id: messages.length + 2,
+        text: data.response,
+        sender: "bot",
+      };
+
+      setMessages((prev) => [...prev, botResponse]);
+    } catch (error) {
+      console.error("에러 발생:", error);
+
+      const errorMessage = {
+        id: messages.length + 2,
+        text: "서버와 연결하는 데 문제가 발생했습니다. 다시 시도해주세요.",
+        sender: "bot",
+      };
+
+      setMessages((prev) => [...prev, errorMessage]);
+    }
 
     setInput("");
   };
@@ -68,6 +93,8 @@ const ChatBotPage = () => {
       {/* 메시지 입력 영역 */}
       <div
         style={{
+          position: "sticky",
+          bottom: 0,
           display: "flex",
           alignItems: "center",
           padding: "10px",
