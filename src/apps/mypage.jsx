@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { DataContext } from '../App';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,21 +13,19 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { setWeightData } = useContext(DataContext); // Context 업데이트를 위한 set 함수
-  const [goalWeight, setGoalWeight] = useState(0); // 목표 체중
-  const [currentPhase, setCurrentPhase] = useState(''); // 현재 단계
-  const [dayInPhase, setDayInPhase] = useState(''); // 진행 일수
-  const [weightData, setWeightDataLocal] = useState([]); // 날짜별 체중, 골격근량, 체지방량
+  const { setWeightData } = useContext(DataContext);
+  const [goalWeight, setGoalWeight] = useState(0);
+  const [currentPhase, setCurrentPhase] = useState('');
+  const [dayInPhase, setDayInPhase] = useState('');
+  const [weightData, setWeightDataLocal] = useState([]);
 
-  const userId = 123; // 실제 유저 ID로 교체 필요
+  const userId = 123;
 
-  // 사용자 목표 정보 조회 API
   useEffect(() => {
     const fetchUserRecord = async () => {
       try {
@@ -46,10 +45,10 @@ const MyPage = () => {
           date: record.date,
           weight: record.bodyMass,
           muscle: record.muscleMass,
-          fat: record.bodyFat || 0, // bodyFat이 없을 때 기본값 0
+          fat: record.bodyFat || 0,
         }));
         setWeightDataLocal(transformedData);
-        setWeightData(transformedData); // Context에 데이터 저장
+        setWeightData(transformedData);
       } catch (error) {
         console.error('Error fetching graph records:', error);
       }
@@ -100,7 +99,6 @@ const MyPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      {/* 사용자 목표 정보 */}
       <section className="p-4 rounded-lg flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div className="w-16 h-16 rounded-full flex justify-center items-center" style={{ backgroundColor: 'rgb(221, 235, 200)' }}>
@@ -127,7 +125,6 @@ const MyPage = () => {
         </button>
       </section>
 
-      {/* 기록 정보 */}
       <section className="mt-6 space-y-4">
         {weightData.map((entry, index) => (
           <div
@@ -161,7 +158,6 @@ const MyPage = () => {
         ))}
       </section>
 
-      {/* 그래프 영역 */}
       <section className="mt-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-lg font-bold py-2 px-4 rounded-full w-40 mx-auto text-center text-gray-700" style={{ backgroundColor: 'rgb(221, 235, 200)' }}>체중 (kg)</h2>
         <div className="mt-4">
@@ -183,5 +179,3 @@ const MyPage = () => {
 };
 
 export default MyPage;
-
-

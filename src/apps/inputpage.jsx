@@ -99,23 +99,23 @@ const InputPage = () => {
         <div className="space-y-4 bg-white p-6 rounded-lg shadow-md" style={{ backgroundColor: 'rgb(249, 251, 242)' }}>
           <div>
             {/* 날짜 선택 */}
-        <h3
-          className="text-center text-lg font-bold text-green-700 mb-4 cursor-pointer"
-          onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
-        >
-          날짜를 선택해주세요
-        </h3>
-        {isDatePickerOpen && (
-          <div className="flex justify-center mb-4">
-            <DatePicker
-              selected={formData.date}
-              onChange={(date) => handleChange('date', date)}
-              dateFormat="yyyy-MM-dd"
-              inline
-              className="rounded-lg border border-gray-300 shadow-sm"
-            />
-          </div>
-        )}
+            <h3
+              className="text-center text-lg font-bold text-green-700 mb-4 cursor-pointer"
+              onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+            >
+              날짜를 선택해주세요
+            </h3>
+            {isDatePickerOpen && (
+              <div className="flex justify-center mb-4">
+                <DatePicker
+                  selected={formData.date}
+                  onChange={(date) => handleChange('date', date)}
+                  dateFormat="yyyy-MM-dd"
+                  inline
+                  className="rounded-lg border border-gray-300 shadow-sm"
+                />
+              </div>
+            )}
           </div>
           <div>
             <label className="block text-lg font-medium text-gray-700">체중 (kg)</label>
@@ -156,7 +156,7 @@ const InputPage = () => {
 
         <form onSubmit={handleSubmit} className="flex justify-center mt-6">
           <button
-            type="submit" // submit 타입이 중요!
+            type="submit"
             className="w-1/2 px-4 py-2 font-medium rounded-full shadow-md hover:bg-green-300"
             style={{ backgroundColor: 'rgb(221, 235, 200)' }}
           >
@@ -169,4 +169,3 @@ const InputPage = () => {
 };
 
 export default InputPage;
-
