@@ -1,8 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 const Login = () => {
-  return (
+
+    const navigate = useNavigate();
+
+    const handleLogin = (e) => {
+        e.preventDefault();  // 기본 폼 제출 방지
+        navigate('/mainpage');  // 로그인 버튼 클릭 시 mypage로 이동
+      };
+
+    return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
       <div className="flex flex-1 justify-center items-center">
