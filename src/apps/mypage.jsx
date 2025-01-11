@@ -43,9 +43,9 @@ const MyPage = () => {
         const response = await axios.get(`/api/user/mypage/graph-records/${userId}`);
         const transformedData = response.data.records.map((record) => ({
           date: record.date,
-          weight: record.bodyMass,
+          weight: record.weight,
           muscle: record.muscleMass,
-          fat: record.bodyFat || 0,
+          fat: record.bodyMass || 0,
         }));
         setWeightDataLocal(transformedData);
         setWeightData(transformedData);

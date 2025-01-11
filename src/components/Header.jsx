@@ -1,19 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import dietlogo from '../components/diet_logo.png';
+import dietLogo from '../components/diet_logo.png';
 
 const Header = () => {
   return (
     <header className="bg-white shadow-md fixed top-0 w-full z-10">
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         {/* 로고 */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center ">
           <img
-            src={dietlogo}
+            src={dietLogo}
             alt="Logo"
-            className="w-12 h-12"
+            className="w-40 h-30"
           />
-          <h1 className="text-xl font-bold text-green-600">박용우봇</h1>
         </div>
 
         {/* 내비게이션 */}
@@ -40,6 +39,7 @@ const Header = () => {
       </div>
     </header>
   );
+  
 };
 
 export default Header;
