@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { DataContext } from '../App';
+import axios from 'axios';
 import {
   Chart as ChartJS,
-  CategoryScale, 
-  LinearScale,  
+  CategoryScale,
+  LinearScale,
   PointElement,
   LineElement,
   Title,
@@ -17,19 +18,53 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { weightData } = useContext(DataContext); // Context에서 데이터 가져오기
+  const { setWeightData } = useContext(DataContext); // Context 업데이트를 위한 set 함수
+  const [goalWeight, setGoalWeight] = useState(0); // 목표 체중
+  const [currentPhase, setCurrentPhase] = useState(''); // 현재 단계
+  const [dayInPhase, setDayInPhase] = useState(''); // 진행 일수
+  const [weightData, setWeightDataLocal] = useState([]); // 날짜별 체중, 골격근량, 체지방량
 
-  const dates = weightData.map((entry) => entry.date);
-  const weights = weightData.map((entry) => entry.weight);
-  const muscles = weightData.map((entry) => entry.muscle);
-  const fats = weightData.map((entry) => entry.fat);
+  const userId = 123; // 실제 유저 ID로 교체 필요
+
+  // 사용자 목표 정보 조회 API
+  useEffect(() => {
+    const fetchUserRecord = async () => {
+      try {
+        const response = await axios.get(`/api/user/mypage/user-record/${userId}`);
+        setGoalWeight(response.data.goalWeight);
+        setCurrentPhase(response.data.currentPhase);
+        setDayInPhase(response.data.dayInPhase);
+      } catch (error) {
+        console.error('Error fetching user record:', error);
+      }
+    };
+
+    const fetchGraphRecords = async () => {
+      try {
+        const response = await axios.get(`/api/user/mypage/graph-records/${userId}`);
+        const transformedData = response.data.records.map((record) => ({
+          date: record.date,
+          weight: record.bodyMass,
+          muscle: record.muscleMass,
+          fat: record.bodyFat || 0, // bodyFat이 없을 때 기본값 0
+        }));
+        setWeightDataLocal(transformedData);
+        setWeightData(transformedData); // Context에 데이터 저장
+      } catch (error) {
+        console.error('Error fetching graph records:', error);
+      }
+    };
+
+    fetchUserRecord();
+    fetchGraphRecords();
+  }, [userId, setWeightData]);
 
   const weightChartData = {
-    labels: dates,
+    labels: weightData.map((entry) => entry.date),
     datasets: [
       {
         label: '체중 (kg)',
-        data: weights,
+        data: weightData.map((entry) => entry.weight),
         borderColor: 'rgb(163, 201, 120)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 2,
@@ -38,11 +73,11 @@ const MyPage = () => {
   };
 
   const muscleChartData = {
-    labels: dates,
+    labels: weightData.map((entry) => entry.date),
     datasets: [
       {
         label: '골격근량 (kg)',
-        data: muscles,
+        data: weightData.map((entry) => entry.muscle),
         borderColor: 'rgb(163, 201, 120)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 1,
@@ -51,11 +86,11 @@ const MyPage = () => {
   };
 
   const fatChartData = {
-    labels: dates,
+    labels: weightData.map((entry) => entry.date),
     datasets: [
       {
         label: '체지방량 (kg)',
-        data: fats,
+        data: weightData.map((entry) => entry.fat),
         borderColor: 'rgb(163, 201, 120)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 1,
@@ -67,7 +102,6 @@ const MyPage = () => {
     <div className="min-h-screen bg-gray-100 p-6">
       {/* 사용자 목표 정보 */}
       <section className="p-4 rounded-lg flex items-center justify-between">
-        {/* 왼쪽 사용자 정보 */}
         <div className="flex items-center space-x-4">
           <div className="w-16 h-16 rounded-full flex justify-center items-center" style={{ backgroundColor: 'rgb(221, 235, 200)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-10 h-10 text-green-700" viewBox="0 0 16 16">
@@ -76,12 +110,11 @@ const MyPage = () => {
             </svg>
           </div>
           <div>
-            <p className="text-l">목표 체중: <strong>55kg</strong></p>
-            <p className="text-l">현재 2단계 4일차 진행 중</p>
+            <p className="text-l">목표 체중: <strong>{goalWeight}kg</strong></p>
+            <p className="text-l">현재 단계: {currentPhase}</p>
+            <p className="text-l">진행 중인 일수: {dayInPhase}일</p>
           </div>
         </div>
-
-        {/* 오른쪽 버튼 */}
         <button
           onClick={() => navigate('/inputpage')}
           className="px-4 py-2 text-sm rounded-full shadow-md hover:bg-green-300 flex items-center space-x-2"
@@ -104,7 +137,11 @@ const MyPage = () => {
           >
             <div className="flex flex-col items-center justify-center flex-1">
               <p className="text-3xl font-extrabold text-center" style={{ color: 'rgb(180, 202, 93)' }}>{entry.date}</p>
-              <button className="mt-4 px-4 py-2 rounded-lg text-sm shadow text-center" style={{ backgroundColor: 'rgb(221, 235, 200)' }}>
+              <button
+                onClick={() => navigate('/editpage', { state: entry })}
+                className="mt-4 px-4 py-2 rounded-lg text-sm shadow text-center"
+                style={{ backgroundColor: 'rgb(221, 235, 200)' }}
+              >
                 수정하기 →
               </button>
             </div>
@@ -146,4 +183,5 @@ const MyPage = () => {
 };
 
 export default MyPage;
+
 

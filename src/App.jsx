@@ -5,6 +5,7 @@ import ChatBotPage from "./apps/chatbot";
 import InputPage from './apps/inputpage';
 import MyPage from "./apps/mypage";
 import Header from "./components/Header";
+import EditPage from "./apps/editpage";
 
 // Context 생성
 export const DataContext = createContext();
@@ -24,9 +25,10 @@ const App = () => {
         <div className="pt-20"></div>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/chatbot" element={<ChatBotPage />} /> {/* ChatBot 경로 추가 */}
+          <Route path="/chatbot" element={<ChatBotPage />} /> 
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/inputpage" element={<InputPage />} />
+          <Route path="/editpage" element={<EditPage/>} />
         </Routes>
       </Router>
     </DataContext.Provider>
