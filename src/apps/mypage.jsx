@@ -21,18 +21,19 @@ const MyPage = () => {
   const { setWeightData } = useContext(DataContext);
   const [goalWeight, setGoalWeight] = useState(0);
   const [currentPhase, setCurrentPhase] = useState('');
-  const [dayInPhase, setDayInPhase] = useState('');
+  const [dayInPhase, setDayInPhase] = useState(0);
   const [weightData, setWeightDataLocal] = useState([]);
 
-  const userId = 123;
+  const userId = 'user001'; // 사용자 ID
 
   useEffect(() => {
     const fetchUserRecord = async () => {
       try {
         const response = await axios.get(`/api/user/mypage/user-record/${userId}`);
-        setGoalWeight(response.data.goalWeight);
-        setCurrentPhase(response.data.currentPhase);
-        setDayInPhase(response.data.dayInPhase);
+        const data = response.data;
+        setGoalWeight(data.goal); // 목표 몸무게 설정
+        setCurrentPhase(`단계 ${data.step}`); // 현재 단계 설정
+        setDayInPhase(data.day); // 진행 중인 일수 설정
       } catch (error) {
         console.error('Error fetching user record:', error);
       }
@@ -41,11 +42,12 @@ const MyPage = () => {
     const fetchGraphRecords = async () => {
       try {
         const response = await axios.get(`/api/user/mypage/graph-records/${userId}`);
-        const transformedData = response.data.records.map((record) => ({
-          date: record.date,
-          weight: record.weight,
-          muscle: record.muscleMass,
-          fat: record.bodyMass || 0,
+        const transformedData = (response.data || []).map((record) => ({
+          id: record.id, // ID를 포함
+          date: record.date || 'N/A',
+          weight: record.weight || 0,
+          muscleMass: record.muscleMass || 0, // 일관된 키 이름 사용
+          bodyMass: record.bodyMass || 0,    // 일관된 키 이름 사용
         }));
         setWeightDataLocal(transformedData);
         setWeightData(transformedData);
@@ -76,7 +78,7 @@ const MyPage = () => {
     datasets: [
       {
         label: '골격근량 (kg)',
-        data: weightData.map((entry) => entry.muscle),
+        data: weightData.map((entry) => entry.muscleMass), // muscleMass 사용
         borderColor: 'rgb(163, 201, 120)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 1,
@@ -89,7 +91,7 @@ const MyPage = () => {
     datasets: [
       {
         label: '체지방량 (kg)',
-        data: weightData.map((entry) => entry.fat),
+        data: weightData.map((entry) => entry.bodyMass), // bodyMass 사용
         borderColor: 'rgb(163, 201, 120)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 1,
@@ -104,13 +106,16 @@ const MyPage = () => {
           <div className="w-16 h-16 rounded-full flex justify-center items-center" style={{ backgroundColor: 'rgb(221, 235, 200)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-10 h-10 text-green-700" viewBox="0 0 16 16">
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-              <path fillRule="evenodd" d="M8 9a5 5 0 0 0-5 5v.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14a5 5 0 0 0-5-5z" />
+              <path
+                fillRule="evenodd"
+                d="M8 9a5 5 0 0 0-5 5v.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14a5 5 0 0 0-5-5z"
+              />
             </svg>
           </div>
           <div>
             <p className="text-l">목표 체중: <strong>{goalWeight}kg</strong></p>
-            <p className="text-l">현재 단계: {currentPhase}</p>
-            <p className="text-l">진행 중인 일수: {dayInPhase}일</p>
+            <p className="text-l">현재 단계: <strong>{currentPhase}</strong></p>
+            <p className="text-l">진행 중인 일수: <strong>{dayInPhase}일</strong></p>
           </div>
         </div>
         <button
@@ -120,7 +125,10 @@ const MyPage = () => {
         >
           <span>오늘의 정보 입력</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-4 h-4" viewBox="0 0 16 16">
-            <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 1 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+            <path
+              fillRule="evenodd"
+              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 1 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+            />
           </svg>
         </button>
       </section>
@@ -148,10 +156,10 @@ const MyPage = () => {
                 현재 체중: <strong>{entry.weight}kg</strong>
               </p>
               <p className="text-m font-medium text-gray-700">
-                골격근량: <strong>{entry.muscle}kg</strong>
+                골격근량: <strong>{entry.muscleMass}kg</strong>
               </p>
               <p className="text-m font-medium text-gray-700">
-                체지방량: <strong>{entry.fat}kg</strong>
+                체지방량: <strong>{entry.bodyMass}kg</strong>
               </p>
             </div>
           </div>

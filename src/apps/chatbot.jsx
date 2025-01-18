@@ -12,7 +12,7 @@ const ChatBotPage = () => {
     const newMessage = {
       id: messages.length + 1,
       text: input,
-      sender: "user",
+      sender: "user001",
     };
 
     setMessages([...messages, newMessage]);
