@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // React Router를 위한 import
+import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import Header from '../components/Header';
 
 const Login = () => {
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({ userId: "", password: "" });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
-    setErrorMessage(""); // 오류 메시지 초기화
+    setErrorMessage(""); 
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // 기본 폼 동작 방지
+    e.preventDefault(); 
 
     if (!formData.userId || !formData.password) {
       setErrorMessage("모두 입력해 주세요.");
@@ -29,7 +29,7 @@ const Login = () => {
       });
 
       if (response.data.login === "success") {
-        navigate('/mainpage'); // 로그인 성공 시 mainpage.jsx로 이동
+        navigate('/mainpage'); 
       } else {
         setErrorMessage(response.data.error || "로그인에 실패했습니다.");
       }

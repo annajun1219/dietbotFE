@@ -18,7 +18,7 @@ const Header = () => {
         {/* 내비게이션 */}
         <nav className="flex space-x-6">
           <Link
-            to="/"
+            to="/mainpage"
             className="text-gray-700 hover:text-green-600 font-medium"
           >
             Home
