@@ -32,7 +32,7 @@ const MyPage = () => {
         const response = await axios.get(`/api/user/mypage/user-record/${userId}`);
         const data = response.data;
         setGoalWeight(data.goal); // 목표 몸무게 설정
-        setCurrentPhase(`단계 ${data.step}`); // 현재 단계 설정
+        setCurrentPhase(`${data.step} 단계`); // 현재 단계 설정
         setDayInPhase(data.day); // 진행 중인 일수 설정
       } catch (error) {
         console.error('Error fetching user record:', error);

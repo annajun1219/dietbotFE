@@ -44,7 +44,7 @@ const EditPage = () => {
 
       const response = await axios.put(`/api/user/modify/record/${recordId}`, payload);
 
-      alert(response.data.message || "수정이 성공적으로 완료되었습니다.");
+      alert("수정이 성공적으로 완료되었습니다.");
       navigate("/mypage"); // MyPage로 이동
     } catch (error) {
       console.error("Error updating record:", error);
