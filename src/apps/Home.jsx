@@ -9,8 +9,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
-      <div className="flex flex-1 flex-col justify-center items-center" style={{ marginTop: '-100px' }}> {/* 로고 위치 위로 더 이동 */}
-        {/* 로고 */}
+      <div className="flex flex-1 flex-col justify-center items-center" style={{ marginTop: '-100px' }}> 
         <img
           src={dietlogo}
           alt="Diet Logo"
@@ -18,8 +17,8 @@ const Home = () => {
           style={{ width: '100%', maxWidth: '600px', height: 'auto' }}
         />
 
-        {/* 버튼들 */}
-        <div className="flex w-full max-w-lg mt-6 items-center justify-between" style={{ gap: '5%' }}> {/* 버튼 간격 조정 */}
+       
+        <div className="flex w-full max-w-lg mt-6 items-center justify-between" style={{ gap: '5%' }}> 
           <button
             onClick={() => navigate('/login')}
             className="w-40"
@@ -38,7 +37,7 @@ const Home = () => {
               (e.target.style.backgroundColor = 'rgb(221,235,200)')
             }
           >
-            로그인
+            Log In
           </button>
           <button
             onClick={() => navigate('/signup')}
@@ -58,7 +57,7 @@ const Home = () => {
               (e.target.style.backgroundColor = 'rgb(221,235,200)')
             }
           >
-            회원가입
+            Sign In
           </button>
         </div>
       </div>
